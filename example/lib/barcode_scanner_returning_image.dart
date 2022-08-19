@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
 
 class BarcodeScannerReturningImage extends StatefulWidget {
-  const BarcodeScannerReturningImage({Key? key}) : super(key: key);
+  const BarcodeScannerReturningImage({super.key});
 
   @override
   _BarcodeScannerReturningImageState createState() =>

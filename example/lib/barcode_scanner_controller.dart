@@ -3,7 +3,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
 
 class BarcodeScannerWithController extends StatefulWidget {
-  const BarcodeScannerWithController({Key? key}) : super(key: key);
+  const BarcodeScannerWithController({super.key});
 
   @override
   _BarcodeScannerWithControllerState createState() =>

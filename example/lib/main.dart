@@ -1,19 +1,45 @@
 import 'package:flutter/material.dart';
-import 'package:mobile_scanner_example/barcode_scanner_controller.dart';
+import 'package:pml_qr_scanner/barcode_scanner_controller.dart';
+import 'package:web_socket_channel/web_socket_channel.dart';
 
-void main() => runApp(const MaterialApp(home: MyHome()));
+void main() => runApp(const MyApp());
 
-class MyHome extends StatelessWidget {
-  const MyHome({Key? key}) : super(key: key);
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
 
+  @override
+  Widget build(BuildContext context) {
+    const title = 'PML QR Scanner';
+    return const MaterialApp(
+      title: title,
+      home: MyHomePage(
+        title: title,
+      ),
+    );
+  }
+}
+
+class MyHomePage extends StatefulWidget {
+  const MyHomePage({
+    super.key,
+    required this.title,
+  });
+
+  final String title;
+
+  @override
+  State<MyHomePage> createState() => _MyHomePageState();
+}
+
+class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Image.asset(
-          'images/Prestige Part of Tuttnauer - White Hi Res.png',
-          width: 200,
-          height: 50,
+          'images/PrestigeMedicalLogo-WHITE.png',
+          width: 210,
+          height: 100,
         ),
         backgroundColor: Colors.grey,
       ),
@@ -52,7 +78,7 @@ class MyHome extends StatelessWidget {
                     child: Text(
                       "Please enter account details:",
                       style: TextStyle(
-                        color: Colors.grey[600],
+                        color: Colors.blue[600],
                         fontSize: 20,
                         fontFamily: 'Montserrat',
                       ),
@@ -92,6 +118,15 @@ class MyHome extends StatelessWidget {
                       ],
                     ),
                   ),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 10.0),
+                    child: ListTile(
+                      title: Image.asset(
+                        'images/Prestige Part of Tuttnauer - Colour Hi Res.png',
+                        width: 150,
+                      ),
+                    ),
+                  ),
                 ],
               ),
             ),
@@ -121,6 +156,10 @@ class MyCustomFormState extends State<MyCustomForm> {
   // Note: This is a GlobalKey<FormState>,
   // not a GlobalKey<MyCustomFormState>.
   final _formKey = GlobalKey<FormState>();
+  final TextEditingController _controller = TextEditingController();
+  final _channel = WebSocketChannel.connect(
+    Uri.parse('ws://192.168.1.135:50'),
+  );
 
   @override
   Widget build(BuildContext context) {
@@ -132,11 +171,18 @@ class MyCustomFormState extends State<MyCustomForm> {
         children: [
           TextFormField(
             // The validator receives the text that the user has entered.
-            validator: (value) {
-              if (value == null || value.isEmpty) {
+            controller: _controller,
+            validator: (text) {
+              if (text == null || text.isEmpty) {
                 return 'Please enter some text';
               }
               return null;
+            },
+          ),
+          StreamBuilder(
+            stream: _channel.stream,
+            builder: (context, snapshot) {
+              return Text(snapshot.hasData ? '${snapshot.data}' : '');
             },
           ),
           Padding(
@@ -148,8 +194,12 @@ class MyCustomFormState extends State<MyCustomForm> {
                   // If the form is valid, display a snackbar. In the real world,
                   // you'd often call a server or save the information in a database.
                   ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text('Email Accepted')),
+                    const SnackBar(content: Text('Username Submitted')),
                   );
+
+                  if (_controller.text.isNotEmpty) {
+                    _channel.sink.add(_controller.text);
+                  }
                 }
               },
               style: ButtonStyle(
@@ -161,5 +211,12 @@ class MyCustomFormState extends State<MyCustomForm> {
         ],
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    _channel.sink.close();
+    _controller.dispose();
+    super.dispose();
   }
 }
