@@ -1,19 +1,27 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:pml_qr_scanner/firebase_options.dart';
 import 'package:pml_qr_scanner/src/app.dart';
 
-void main() async {
+Future main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
 
-  // Both of the following lines are good for testing,
-  // but can be removed for release builds
-  await FirebaseAuth.instance.useAuthEmulator('localhost', 9099);
-  FirebaseAuth.instance.signOut();
+  //// Both of the following lines are good for testing,
+  //// but can be removed for release builds
+  //await FirebaseAuth.instance.useAuthEmulator('localhost', 9099);
+  //FirebaseAuth.instance.signOut();
 
-  runApp(const MyApp());
+  runApp(MyApp());
+}
+
+class MyApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) => MaterialApp(
+        debugShowCheckedModeBanner: false,
+        theme: ThemeData(primarySwatch: Colors.blue),
+        home: MainPage(),
+      );
 }

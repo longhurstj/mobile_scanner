@@ -2,10 +2,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class LoginPage extends StatefulWidget {
-  const LoginPage({super.key});
-
   @override
-  State<LoginPage> createState() => _LoginPageState();
+  _LoginPageState createState() => _LoginPageState();
 }
 
 class _LoginPageState extends State<LoginPage> {
@@ -33,7 +31,8 @@ class _LoginPageState extends State<LoginPage> {
       );
 
       await _credential.user!.updateDisplayName(
-          '${_firstnameController.text} ${_lastnameController.text}');
+        '${_firstnameController.text} ${_lastnameController.text}',
+      );
 
       return _credential;
     } on FirebaseAuthException catch (e) {
@@ -93,120 +92,182 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        automaticallyImplyLeading: false,
+        title: Image.asset(
+          'images/PrestigeMedicalLogo-WHITE.png',
+          width: 210,
+          height: 100,
+        ),
+        backgroundColor: Colors.grey,
+      ),
       body: Center(
-        child: Form(
-          key: _formKey,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              if (_isSigningUp)
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: ConstrainedBox(
-                    constraints: const BoxConstraints(maxWidth: 500.0),
-                    child: TextFormField(
-                      controller: _firstnameController,
-                      decoration: const InputDecoration(
-                        label: Text('First Name'),
-                        border: OutlineInputBorder(),
-                      ),
-                      validator: (String? input) {
-                        if (input == null || input.isEmpty) {
-                          return 'Please enter a username';
-                        }
-                        return null;
-                      },
-                    ),
-                  ),
-                ),
-              if (_isSigningUp)
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: ConstrainedBox(
-                    constraints: const BoxConstraints(maxWidth: 500.0),
-                    child: TextFormField(
-                      controller: _lastnameController,
-                      decoration: const InputDecoration(
-                        label: Text('Last Name'),
-                        border: OutlineInputBorder(),
-                      ),
-                      validator: (String? input) {
-                        if (input == null || input.isEmpty) {
-                          return 'Please enter a username';
-                        }
-                        return null;
-                      },
-                    ),
-                  ),
-                ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: ConstrainedBox(
-                  constraints: const BoxConstraints(maxWidth: 500.0),
-                  child: TextFormField(
-                    controller: _usernameController,
-                    decoration: const InputDecoration(
-                      label: Text('Username'),
-                      border: OutlineInputBorder(),
-                    ),
-                    validator: (String? input) {
-                      if (input == null || input.isEmpty) {
-                        return 'Please enter a username';
-                      }
-                      return null;
-                    },
-                  ),
+        child: ListView(
+          children: [
+            const Padding(
+              padding: EdgeInsets.only(top: 25.0),
+            ),
+            Center(
+              child: Text(
+                "PML QR Code Scanner",
+                style: TextStyle(
+                  color: Colors.grey[600],
+                  fontSize: 24,
+                  fontWeight: FontWeight.bold,
+                  fontFamily: 'Montserrat',
                 ),
               ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: ConstrainedBox(
-                  constraints: const BoxConstraints(maxWidth: 500.0),
-                  child: TextFormField(
-                    controller: _passwordController,
-                    obscureText: true,
-                    decoration: const InputDecoration(
-                      label: Text('Password'),
-                      border: OutlineInputBorder(),
-                    ),
-                    validator: (String? input) {
-                      if (input == null || input.isEmpty) {
-                        return 'Please enter a password.';
-                      }
-                      return null;
-                    },
-                  ),
+            ),
+            const Padding(
+              padding: EdgeInsets.all(5.0),
+            ),
+            Center(
+              child: Text(
+                "Please enter account details:",
+                style: TextStyle(
+                  color: Colors.blue[600],
+                  fontSize: 20,
+                  fontFamily: 'Montserrat',
                 ),
               ),
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 30.0),
-                child: ElevatedButton(
-                  onPressed: () async {
-                    _isSigningUp
-                        ? await _signUpWithEmailAndPassword()
-                        : await _loginWithEmailAndPassword();
+            ),
+            const Padding(
+              padding: EdgeInsets.only(top: 20.0),
+            ),
+            Center(
+              child: Form(
+                key: _formKey,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    if (_isSigningUp)
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: ConstrainedBox(
+                          constraints: const BoxConstraints(maxWidth: 500.0),
+                          child: TextFormField(
+                            controller: _firstnameController,
+                            decoration: const InputDecoration(
+                              label: Text('First Name'),
+                              border: OutlineInputBorder(),
+                            ),
+                            validator: (String? input) {
+                              if (input == null || input.isEmpty) {
+                                return 'Please enter a username';
+                              }
+                              return null;
+                            },
+                          ),
+                        ),
+                      ),
+                    if (_isSigningUp)
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: ConstrainedBox(
+                          constraints: const BoxConstraints(maxWidth: 500.0),
+                          child: TextFormField(
+                            controller: _lastnameController,
+                            decoration: const InputDecoration(
+                              label: Text('Last Name'),
+                              border: OutlineInputBorder(),
+                            ),
+                            validator: (String? input) {
+                              if (input == null || input.isEmpty) {
+                                return 'Please enter a username';
+                              }
+                              return null;
+                            },
+                          ),
+                        ),
+                      ),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: ConstrainedBox(
+                        constraints: const BoxConstraints(maxWidth: 500.0),
+                        child: TextFormField(
+                          controller: _usernameController,
+                          decoration: const InputDecoration(
+                            label: Text('Username'),
+                            border: OutlineInputBorder(),
+                          ),
+                          validator: (String? input) {
+                            if (input == null || input.isEmpty) {
+                              return 'Please enter a username';
+                            }
+                            return null;
+                          },
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: ConstrainedBox(
+                        constraints: const BoxConstraints(maxWidth: 500.0),
+                        child: TextFormField(
+                          controller: _passwordController,
+                          obscureText: true,
+                          decoration: const InputDecoration(
+                            label: Text('Password'),
+                            border: OutlineInputBorder(),
+                          ),
+                          validator: (String? input) {
+                            if (input == null || input.isEmpty) {
+                              return 'Please enter a password.';
+                            }
+                            return null;
+                          },
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 30.0),
+                      child: ElevatedButton(
+                        onPressed: signIn,
+                        // onPressed: () async {
+                        //   _isSigningUp
+                        //       ? await _signUpWithEmailAndPassword()
+                        //       : await _loginWithEmailAndPassword();
 
-                    if (FirebaseAuth.instance.currentUser != null) {
-                      Navigator.of(context).popAndPushNamed('/');
-                    }
-                  },
-                  child: _isLoading
-                      ? const CircularProgressIndicator()
-                      : Text(_isSigningUp ? 'Sign Up' : 'Log In'),
+                        //   if (FirebaseAuth.instance.currentUser != null) {
+                        //     Navigator.of(context).popAndPushNamed('/');
+                        //   }
+                        // },
+                        child: _isLoading
+                            ? const CircularProgressIndicator()
+                            : Text(_isSigningUp ? 'Sign Up' : 'Log In'),
+                      ),
+                    ),
+                    // TextButton(
+                    //   onPressed: () {
+                    //     setState(() {
+                    //       _isSigningUp = true;
+                    //     });
+                    //   },
+                    //   child: const Text('Don\'t have an account? Sign Up'),
+                    // )
+                    Padding(
+                      padding: const EdgeInsets.only(top: 10.0),
+                      child: ListTile(
+                        title: Image.asset(
+                          'images/Prestige Part of Tuttnauer - Colour Hi Res.png',
+                          width: 150,
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
               ),
-              TextButton(
-                onPressed: () {
-                  setState(() {
-                    _isSigningUp = true;
-                  });
-                },
-                child: const Text('Don\'t have an account? Sign Up'),
-              )
-            ],
-          ),
+            ),
+          ],
         ),
       ),
+    );
+  }
+
+  Future signIn() async {
+    await FirebaseAuth.instance.signInWithEmailAndPassword(
+      email: _usernameController.text.trim(),
+      password: _passwordController.text.trim(),
     );
   }
 }

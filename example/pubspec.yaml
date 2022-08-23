@@ -7,6 +7,7 @@ environment:
 
 dependencies:
   authentication: ^0.0.1
+  cloud_firestore: ^3.1.5  
   firebase_auth: ^3.6.4
   firebase_core: ^1.20.1
   flutter:

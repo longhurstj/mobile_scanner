@@ -1,21 +1,15 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:pml_qr_scanner/barcode_scanner_controller.dart';
+import 'package:pml_qr_scanner/barcode_scanner_without_controller.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
 
 class HomePage extends StatefulWidget {
-  const HomePage({
-    super.key,
-    required this.title,
-  });
-
-  final String title;
   @override
-  State<HomePage> createState() => _HomePageState();
+  _HomePageState createState() => _HomePageState();
 }
 
 class _HomePageState extends State<HomePage> {
-  User? _user;
+  User? user;
 
   @override
   void initState() {
@@ -23,7 +17,7 @@ class _HomePageState extends State<HomePage> {
     FirebaseAuth.instance.authStateChanges().listen((User? user) {
       if (user != null) {
         setState(() {
-          _user = FirebaseAuth.instance.currentUser!;
+          user = FirebaseAuth.instance.currentUser!;
         });
       }
     });
@@ -32,103 +26,123 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+    final user = FirebaseAuth.instance.currentUser!;
+
     return Scaffold(
       appBar: AppBar(
-        title: Image.asset(
-          'images/PrestigeMedicalLogo-WHITE.png',
-          width: 210,
-          height: 100,
+        leading: Builder(
+          builder: (context) {
+            return IconButton(
+              icon: const Icon(Icons.arrow_back, size: 24),
+              onPressed: () => FirebaseAuth.instance.signOut(),
+            );
+          },
         ),
+        title: const Text('Sign Out'),
         backgroundColor: Colors.grey,
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(1.0),
-        child: ListView(
-          children: [
-            SizedBox(
-              width: MediaQuery.of(context).size.width,
-              height: MediaQuery.of(context).size.height,
-              child: Column(
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.only(top: 10.0),
-                    child: ListTile(
-                      title: Image.asset(
-                        'images/0.1.1 Advance Pro dental room banner WHITE.png',
-                        width: 150,
+      body: Center(
+        child: Padding(
+          padding: const EdgeInsets.all(1.0),
+          child: ListView(
+            children: [
+              SizedBox(
+                width: MediaQuery.of(context).size.width,
+                height: MediaQuery.of(context).size.height,
+                child: Column(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(top: 10.0),
+                      child: ListTile(
+                        title: Image.asset(
+                          'images/0.1.1 Advance Pro dental room banner WHITE.png',
+                          width: 150,
+                        ),
                       ),
                     ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(10.0),
-                    child: Text(
-                      "PML QR Code Scanner",
-                      style: TextStyle(
-                        color: Colors.grey[600],
-                        fontSize: 24,
-                        fontWeight: FontWeight.bold,
-                        fontFamily: 'Montserrat',
+                    Padding(
+                      padding: const EdgeInsets.all(10.0),
+                      child: Text(
+                        "PML QR Code Scanner",
+                        style: TextStyle(
+                          color: Colors.grey[600],
+                          fontSize: 24,
+                          fontWeight: FontWeight.bold,
+                          fontFamily: 'Montserrat',
+                        ),
                       ),
                     ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(10.0),
-                    child: Text(
-                      "Please enter account details:",
-                      style: TextStyle(
-                        color: Colors.blue[600],
-                        fontSize: 20,
-                        fontFamily: 'Montserrat',
-                      ),
-                    ),
-                  ),
-                  const Padding(
-                    padding: EdgeInsets.all(10.0),
-                    child: MyCustomForm(),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(10.0),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: [
-                        ElevatedButton(
-                          onPressed: () {
-                            Navigator.of(context).push(
-                              MaterialPageRoute(
-                                builder: (context) =>
-                                    const BarcodeScannerWithController(),
-                              ),
-                            );
-                          },
-                          style: ButtonStyle(
-                            backgroundColor:
-                                MaterialStateProperty.all(Colors.grey),
-                          ),
-                          child: const Text(
-                            'SCAN',
+                    Padding(
+                      padding: const EdgeInsets.all(10.0),
+                      child: Column(
+                        children: [
+                          Text(
+                            "Signed in as",
                             style: TextStyle(
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold,
+                              color: Colors.blueGrey[600],
+                              fontSize: 10,
                               fontFamily: 'Montserrat',
                             ),
                           ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 10.0),
-                    child: ListTile(
-                      title: Image.asset(
-                        'images/Prestige Part of Tuttnauer - Colour Hi Res.png',
-                        width: 150,
+                          Text(
+                            user.email!,
+                            style: TextStyle(
+                              color: Colors.blue[600],
+                              fontSize: 14,
+                              fontFamily: 'Montserrat',
+                            ),
+                          ),
+                        ],
                       ),
                     ),
-                  ),
-                ],
+                    //  const Padding(
+                    //    padding: EdgeInsets.all(10.0),
+                    //    child: MyCustomForm(),
+                    //  ),
+                    Padding(
+                      padding: const EdgeInsets.all(10.0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: [
+                          ElevatedButton(
+                            onPressed: () {
+                              Navigator.of(context).push(
+                                MaterialPageRoute(
+                                  builder: (context) =>
+                                      const BarcodeScannerWithoutController(),
+                                ),
+                              );
+                            },
+                            style: ButtonStyle(
+                              backgroundColor:
+                                  MaterialStateProperty.all(Colors.grey),
+                            ),
+                            child: const Text(
+                              'OPEN SCANNER',
+                              style: TextStyle(
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold,
+                                fontFamily: 'Montserrat',
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 10.0),
+                      child: ListTile(
+                        title: Image.asset(
+                          'images/Prestige Part of Tuttnauer - Colour Hi Res.png',
+                          width: 150,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
