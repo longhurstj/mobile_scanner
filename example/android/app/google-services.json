@@ -7,9 +7,9 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:321871063098:android:63a18bcb94f53a5280ed03",
+        "mobilesdk_app_id": "1:321871063098:android:5ff4c91a5df46df780ed03",
         "android_client_info": {
-          "package_name": "dev.steenbakker.mobile_scanner_example"
+          "package_name": "dev.longhurstj.pml_qr_scanner"
         }
       },
       "oauth_client": [
@@ -29,6 +29,13 @@
             {
               "client_id": "321871063098-kvnrcb26dvat6v5pu8fv5oiqt997iki8.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "321871063098-kann7v2mdgmvj5r4v2kfqeub4e334634.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "dev.longhurstj.pml_qr_scanner"
+              }
             }
           ]
         }

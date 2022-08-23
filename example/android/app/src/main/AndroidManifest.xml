@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="dev.steenbakker.PML QR Scanner">
+    package="dev.longhurstj.pml_qr_scanner">
 
    <application
         android:label="PML QR Scanner"
