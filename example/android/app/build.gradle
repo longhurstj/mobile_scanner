@@ -43,7 +43,7 @@ android {
 
     defaultConfig {
         // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
-        applicationId "dev.longhurstj.pml_qr_scanner"
+        applicationId "dev.longhurstj.jp_desk_app"
         minSdkVersion 21
         targetSdkVersion 32
         versionCode flutterVersionCode.toInteger()
@@ -57,7 +57,7 @@ android {
             signingConfig signingConfigs.debug
         }
     }
-    namespace 'dev.longhurstj.pml_qr_scanner'
+    namespace 'dev.longhurstj.jp_desk_app'
 }
 
 flutter {

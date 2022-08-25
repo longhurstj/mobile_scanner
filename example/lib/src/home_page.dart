@@ -1,6 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:pml_qr_scanner/barcode_scanner_without_controller.dart';
+import 'package:jp_desk_app/barcode_scanner_without_controller.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
 
 class HomePage extends StatefulWidget {

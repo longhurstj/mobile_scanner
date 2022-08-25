@@ -1,8 +1,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="dev.longhurstj.pml_qr_scanner">
+    package="dev.longhurstj.jp_desk_app">
 
    <application
-        android:label="PML QR Scanner"
+        android:label="Remote Desk"
         android:icon="@mipmap/ic_launcher">
         <activity
             android:name="io.flutter.embedding.android.FlutterActivity"

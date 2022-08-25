@@ -1,4 +1,4 @@
-group 'dev.steenbakker.mobile_scanner'
+group 'dev.longhurstj.jp_desk_app'
 version '1.0-SNAPSHOT'
 
 buildscript {

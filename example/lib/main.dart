@@ -1,7 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:pml_qr_scanner/firebase_options.dart';
-import 'package:pml_qr_scanner/src/app.dart';
+import 'package:jp_desk_app/firebase_options.dart';
+import 'package:jp_desk_app/src/app.dart';
 
 Future main() async {
   WidgetsFlutterBinding.ensureInitialized();
